@@ -338,6 +338,24 @@ scene.cameraFollowSprite(mySprite)
 effects.starField.startScreenEffect()
 info.setLife(750)
 mySprite.setFlag(SpriteFlag.ShowPhysics, true)
+let t = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.Player)
 game.onUpdate(function () {
     if (controller.right.isPressed() || controller.up.isPressed() || controller.down.isPressed() || controller.left.isPressed()) {
         info.changeLifeBy(-1)
