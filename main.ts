@@ -117,16 +117,26 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
 . . . . . . . 2 . . 2 . . . . . 
 `)
 })
-function land (multiplier: number) {
-    if (mySprite.vy > 6) {
-        game.over(false, effects.slash)
-    } else {
-        game.over(true, effects.confetti)
-        info.setScore(multiplier * info.life())
-    }
-}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.ax = gravity - THRUST
+    mySprite.ax = THRUST
+    mySprite.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . 2 1 1 1 1 1 1 2 . . . 
+. 2 4 d . 2 1 9 9 9 9 1 2 . . . 
+2 2 4 5 d 2 1 7 7 7 7 1 2 . . . 
+. 2 4 d . 2 1 7 7 7 7 1 2 . . . 
+. 2 4 5 d 2 1 1 1 1 1 1 2 . . . 
+2 2 4 d . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`)
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     gravity = 4
@@ -150,6 +160,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 `)
 })
+function land (multiplier: number) {
+    if (mySprite.vy > 16) {
+        game.over(false, effects.slash)
+    } else {
+        game.over(true, effects.confetti)
+        info.setScore(multiplier * info.life())
+    }
+}
 scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
     land(1)
 })
@@ -158,13 +176,13 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . 2 1 1 1 1 1 1 2 . . . . . . 
-. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
-. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
-. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
-. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
-. . . . . . . . . . . d 4 2 . . 
 . . . . . . . . . . . . . . . . 
+. . . . . 2 1 1 1 1 1 1 2 . . . 
+. 2 4 d . 2 1 9 9 9 9 1 2 . . . 
+2 2 4 5 d 2 1 7 7 7 7 1 2 . . . 
+. 2 4 d . 2 1 7 7 7 7 1 2 . . . 
+. 2 4 5 d 2 1 1 1 1 1 1 2 . . . 
+2 2 4 d . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -200,17 +218,17 @@ scene.onOverlapTile(SpriteKind.Player, myTiles.tile4, function (sprite, location
     land(2)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.ax = THRUST
+    mySprite.ax = idle
     mySprite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
+. . 2 1 1 1 1 1 1 2 . . . . . . 
+. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
+. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
+. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
+. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
+. . . . . . . . . . . d 4 2 . . 
 . . . . . . . . . . . . . . . . 
-. . . . . 2 1 1 1 1 1 1 2 . . . 
-. 2 4 d . 2 1 9 9 9 9 1 2 . . . 
-2 2 4 5 d 2 1 7 7 7 7 1 2 . . . 
-. 2 4 d . 2 1 7 7 7 7 1 2 . . . 
-. 2 4 5 d 2 1 1 1 1 1 1 2 . . . 
-2 2 4 d . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -225,13 +243,13 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
+. . 2 1 1 1 1 1 1 2 . . . . . . 
+. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
+. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
+. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
+. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
+. . . . . . . . . . . d 4 2 . . 
 . . . . . . . . . . . . . . . . 
-. . . . . 2 1 1 1 1 1 1 2 . . . 
-. 2 4 d . 2 1 9 9 9 9 1 2 . . . 
-2 2 4 5 d 2 1 7 7 7 7 1 2 . . . 
-. 2 4 d . 2 1 7 7 7 7 1 2 . . . 
-. 2 4 5 d 2 1 1 1 1 1 1 2 . . . 
-2 2 4 d . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -264,7 +282,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 `)
 })
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.greenInnerNorthWest, function (sprite, location) {
-    info.setScore(400 * info.life())
+    info.setScore(500 * info.life())
     game.over(true, effects.confetti)
 })
 let mySprite: Sprite = null
