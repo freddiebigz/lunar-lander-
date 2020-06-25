@@ -117,6 +117,14 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
 . . . . . . . 2 . . 2 . . . . . 
 `)
 })
+function land (multiplier: number) {
+    if (mySprite.vy > 6) {
+        game.over(false, effects.slash)
+    } else {
+        game.over(true, effects.confetti)
+        info.setScore(multiplier * info.life())
+    }
+}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.ax = gravity - THRUST
 })
@@ -141,6 +149,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
+    land(1)
 })
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.ax = idle
@@ -184,6 +195,9 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `)
+})
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile4, function (sprite, location) {
+    land(2)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.ax = THRUST
@@ -249,13 +263,17 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . 2 . . 2 . . . . . 
 `)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.greenInnerNorthWest, function (sprite, location) {
+    info.setScore(400 * info.life())
+    game.over(true, effects.confetti)
+})
 let mySprite: Sprite = null
 let idle = 0
 let THRUST = 0
 let gravity = 0
-gravity = 1
-THRUST = 4
-idle = 0
+gravity = 6
+THRUST = 15
+idle = 4
 mySprite = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -276,7 +294,7 @@ mySprite = sprites.create(img`
 `, SpriteKind.Player)
 mySprite.ay = gravity
 tiles.setTilemap(tiles.createTilemap(
-            hex`1800100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000a000000000a000000000000000a0a040a0a0a00000000000a040a0a0a0a000000000000000a0a0a0a0a0a00000000000a0a0a0a0a0a000a0a0a040a0a0a0a0a0a0a0a00000000000a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a040a0a040a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a080a0a0a0a0a0a0a040a0a0a0a0a0a0a0a0a0a0a0a0a0a0a040a0a`,
+            hex`18001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000911000000000000000000000000000000000000000000000911000000000b00000000000000090b1109090900000000000b11110b0b0b0000000000000009111111050900000000000b111109090f0009090904090909111105050900000000000b0c09090905000909090505090e0e05050909041111110b0b090909050a00090909050e090e0e050509050505050505050a0909050c000505050505050505050e0e0e0505050e0e0e0c0f0f0f0a000a0a0a0e0e0a0e0e0e0e0e0e0e0e0e0e0e0e0a0a0f0f0a040a0a0a0a0a0a0a0a0e0e0e0e0e0e0e0e0e0e`,
             img`
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -286,38 +304,24 @@ tiles.setTilemap(tiles.createTilemap(
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . 2 . . . . . . . 2 2 2 2 2 2 . . . . . . 
-2 2 2 2 2 . . . . . . . 2 . . . . 2 . . . . . . 
-. . . . . . 2 2 2 2 2 2 2 . . . . 2 . . . . . . 
-. . . . . . . . . . . . . . . . . 2 2 2 2 . 2 2 
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . 2 . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . 
 `,
-            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.builtin.crowd7,sprites.builtin.brick,sprites.dungeon.hazardLava0,sprites.vehicle.roadTurn2,sprites.dungeon.hazardLava1,myTiles.tile3,myTiles.tile4,sprites.dungeon.darkGroundNorthEast0],
+            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.builtin.crowd7,sprites.builtin.brick,sprites.dungeon.hazardLava0,sprites.vehicle.roadTurn2,sprites.dungeon.hazardLava1,myTiles.tile3,myTiles.tile4,sprites.dungeon.darkGroundNorthEast0,sprites.castle.tileGrass3,sprites.castle.tilePath7,sprites.castle.tilePath4,sprites.castle.tilePath8,sprites.builtin.crowd3,sprites.dungeon.doorClosedNorth,sprites.dungeon.greenInnerNorthWest],
             TileScale.Sixteen
         ))
 scene.cameraFollowSprite(mySprite)
 effects.starField.startScreenEffect()
-info.setLife(4000)
+info.setLife(750)
+mySprite.setFlag(SpriteFlag.ShowPhysics, true)
 game.onUpdate(function () {
-    if (controller.down.isPressed() || controller.up.isPressed()) {
-        info.changeLifeBy(-1)
-    }
-})
-game.onUpdate(function () {
-    if (controller.up.isPressed()) {
-        info.changeLifeBy(-1)
-    }
-})
-game.onUpdate(function () {
-    if (controller.right.isPressed() || controller.left.isPressed()) {
-        info.changeLifeBy(-1)
-    }
-})
-game.onUpdate(function () {
-    if (controller.left.isPressed() || controller.right.isPressed()) {
+    if (controller.right.isPressed() || controller.up.isPressed() || controller.down.isPressed() || controller.left.isPressed()) {
         info.changeLifeBy(-1)
     }
 })
