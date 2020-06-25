@@ -1,3 +1,7 @@
+namespace SpriteKind {
+    export const thrust = SpriteKind.create()
+    export const thrustkind = SpriteKind.create()
+}
 namespace myTiles {
     //% blockIdentity=images._tile
     export const tile0 = img`
@@ -95,7 +99,7 @@ f f f f f f f f f f f f f f f f
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 `
 }
-controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
     gravity = -10
     mySprite.vy = gravity
     mySprite.setImage(img`
@@ -117,10 +121,28 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 . . . . . . . 2 . . 2 . . . . . 
 `)
 })
-scene.onOverlapTile(SpriteKind.Player, myTiles.tile4, function (sprite, location) {
-    land(2)
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.ax = idle
+    mySprite.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . 2 1 1 1 1 1 1 2 . . . . . . 
+. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
+. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
+. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
+. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
+. . . . . . . . . . . d 4 2 . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`)
 })
-controller.down.onEvent(ControllerButtonEvent.Released, function () {
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     gravity = 4
     mySprite.vy = gravity
     mySprite.setImage(img`
@@ -150,9 +172,58 @@ function land (multiplier: number) {
         info.setScore(multiplier * info.life())
     }
 }
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.ax = THRUST
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.brick, function (sprite, location) {
+    land(1)
+})
+controller.left.onEvent(ControllerButtonEvent.Released, function () {
+    mySprite.ax = idle
     mySprite.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . 2 1 1 1 1 1 1 2 . . . . . . 
+. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
+. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
+. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
+. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
+. . . . . . . . . . . d 4 2 . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`)
+})
+controller.down.onEvent(ControllerButtonEvent.Released, function () {
+    gravity = 4
+    mySprite.vy = gravity
+    mySprite.setImage(img`
+. . . . . 2 . . 2 . . . . . . . 
+. . . . 2 2 . . 2 2 . . . . . . 
+. . . . 2 2 2 2 2 2 . . . . . . 
+. . . . 2 4 4 4 4 2 . . . . . . 
+. . . . 2 d 4 4 d 2 . . . . . . 
+. . . . 2 d d d d 2 . . . . . . 
+. . . . d d 5 5 d d . . . . . . 
+. . . . d d 5 5 d d . . . . . . 
+. . . 2 1 1 1 1 1 1 2 . . . . . 
+. . . 2 1 9 9 9 9 1 2 . . . . . 
+. . . 2 1 7 7 7 7 1 2 . . . . . 
+. . . 2 1 7 7 7 7 1 2 . . . . . 
+. . . 2 1 1 1 1 1 1 2 . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`)
+})
+scene.onOverlapTile(SpriteKind.Player, myTiles.tile4, function (sprite, location) {
+    land(2)
+})
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    mySprite.ax = THRUST
+    thrustspite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -176,27 +247,6 @@ controller.right.onEvent(ControllerButtonEvent.Released, function () {
     mySprite.setImage(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . 2 1 1 1 1 1 1 2 . . . . . . 
-. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
-. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
-. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
-. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
-. . . . . . . . . . . d 4 2 . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`)
-})
-controller.left.onEvent(ControllerButtonEvent.Released, function () {
-    mySprite.ax = idle
-    mySprite.setImage(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . 2 1 1 1 1 1 1 2 . . . 
 . 2 4 d . 2 1 9 9 9 9 1 2 . . . 
@@ -213,28 +263,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 . . . . . . . . . . . . . . . . 
 `)
 })
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.ax = idle
-    mySprite.setImage(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . 2 1 1 1 1 1 1 2 . . . . . . 
-. . 2 1 9 9 9 9 1 2 . d 4 2 . . 
-. . 2 1 7 7 7 7 1 2 d 5 4 2 2 . 
-. . 2 1 7 7 7 7 1 2 . d 4 2 . . 
-. . 2 1 1 1 1 1 1 2 d 5 4 2 2 . 
-. . . . . . . . . . . d 4 2 . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`)
-})
-controller.up.onEvent(ControllerButtonEvent.Released, function () {
+controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     gravity = -10
     mySprite.vy = gravity
     mySprite.setImage(img`
@@ -256,28 +285,11 @@ controller.up.onEvent(ControllerButtonEvent.Released, function () {
 . . . . . . . 2 . . 2 . . . . . 
 `)
 })
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    gravity = 4
-    mySprite.vy = gravity
-    mySprite.setImage(img`
-. . . . . 2 . . 2 . . . . . . . 
-. . . . 2 2 . . 2 2 . . . . . . 
-. . . . 2 2 2 2 2 2 . . . . . . 
-. . . . 2 4 4 4 4 2 . . . . . . 
-. . . . 2 d 4 4 d 2 . . . . . . 
-. . . . 2 d d d d 2 . . . . . . 
-. . . . d d 5 5 d d . . . . . . 
-. . . . d d 5 5 d d . . . . . . 
-. . . 2 1 1 1 1 1 1 2 . . . . . 
-. . . 2 1 9 9 9 9 1 2 . . . . . 
-. . . 2 1 7 7 7 7 1 2 . . . . . 
-. . . 2 1 7 7 7 7 1 2 . . . . . 
-. . . 2 1 1 1 1 1 1 2 . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`)
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.greenInnerNorthWest, function (sprite, location) {
+    info.setScore(500 * info.life())
+    game.over(true, effects.confetti)
 })
+let thrustspite: Sprite = null
 let mySprite: Sprite = null
 let idle = 0
 let THRUST = 0
@@ -331,6 +343,26 @@ scene.cameraFollowSprite(mySprite)
 effects.starField.startScreenEffect()
 info.setLife(750)
 mySprite.setFlag(SpriteFlag.ShowPhysics, true)
+thrustspite = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.thrustkind)
+thrustspite.follow(mySprite, 700)
+thrustspite.setFlag(SpriteFlag.Ghost, true)
 game.onUpdate(function () {
     if (controller.right.isPressed() || controller.up.isPressed() || controller.down.isPressed() || controller.left.isPressed()) {
         info.changeLifeBy(-1)
