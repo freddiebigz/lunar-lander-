@@ -276,7 +276,7 @@ mySprite = sprites.create(img`
 `, SpriteKind.Player)
 mySprite.ay = gravity
 tiles.setTilemap(tiles.createTilemap(
-            hex`18001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000500000000000000050504050505000000000000040505050500000000000000050505050505000000000000050505050500050505040505050505050505000000000000050505050500050505050505050505050505040505040505050505050500050505050505050505050505050505070505050505050500050505050505050505050505050505010505050505050500050505050505050505050505050505080505050505050504050505050505050505050505050505040505`,
+            hex`1800100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000a000000000a000000000000000a0a040a0a0a00000000000a040a0a0a0a000000000000000a0a0a0a0a0a00000000000a0a0a0a0a0a000a0a0a040a0a0a0a0a0a0a0a00000000000a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a040a0a040a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a010a0a0a0a0a0a0a000a0a0a0a0a0a0a0a0a0a0a0a0a0a0a080a0a0a0a0a0a0a040a0a0a0a0a0a0a0a0a0a0a0a0a0a0a040a0a`,
             img`
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
@@ -293,16 +293,16 @@ tiles.setTilemap(tiles.createTilemap(
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . 2 . . 
 `,
-            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.builtin.crowd7,sprites.builtin.brick,sprites.dungeon.hazardLava0,sprites.vehicle.roadTurn2,sprites.dungeon.hazardLava1,myTiles.tile3,myTiles.tile4],
+            [myTiles.tile0,myTiles.tile1,myTiles.tile2,sprites.builtin.crowd7,sprites.builtin.brick,sprites.dungeon.hazardLava0,sprites.vehicle.roadTurn2,sprites.dungeon.hazardLava1,myTiles.tile3,myTiles.tile4,sprites.dungeon.darkGroundNorthEast0],
             TileScale.Sixteen
         ))
 scene.cameraFollowSprite(mySprite)
 effects.starField.startScreenEffect()
-info.setLife(1000)
+info.setLife(4000)
 game.onUpdate(function () {
-    if (controller.down.isPressed()) {
+    if (controller.down.isPressed() || controller.up.isPressed()) {
         info.changeLifeBy(-1)
     }
 })
@@ -312,12 +312,12 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if (controller.right.isPressed()) {
+    if (controller.right.isPressed() || controller.left.isPressed()) {
         info.changeLifeBy(-1)
     }
 })
 game.onUpdate(function () {
-    if (controller.left.isPressed()) {
+    if (controller.left.isPressed() || controller.right.isPressed()) {
         info.changeLifeBy(-1)
     }
 })
